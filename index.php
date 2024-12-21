@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Esegue una richiesta all'API Pokémon TCG
+ * Executes a request to the Pokémon TCG API
  *
- * @param string $url URL dell'API da chiamare
- * @return array Risultato decodificato dalla risposta JSON
+ * @param string $url The API URL to call
+ * @return array Decoded result from the JSON response
  */
 function executeApiRequest(string $url): array
 {
@@ -12,12 +12,11 @@ function executeApiRequest(string $url): array
 
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
 
     $response = curl_exec($ch);
 
     if (curl_errno($ch)) {
-        echo "Errore nella richiesta: " . curl_error($ch);
+        echo "Request error: " . curl_error($ch);
         curl_close($ch);
         return [];
     }
@@ -27,15 +26,15 @@ function executeApiRequest(string $url): array
 }
 
 /**
- * Ottiene un pacchetto casuale di carte Pokémon
+ * Gets a random Pokémon pack
  *
- * @param int $count Numero di carte nel pacchetto
- * @return array Dati delle carte
+ * @param int $count Number of cards in the pack
+ * @return array Card data
  */
 function getRandomPokemonPack(int $count = 5): array
 {
-    // Calcola una pagina casuale (simulando casualità)
-    $totalCards = 12000; // Stima del numero totale di carte disponibili nell'API
+    // Calculate a random page (simulating randomness)
+    $totalCards = 12000; // Estimate of the total number of cards available in the API
     $maxPage = ceil($totalCards / $count);
     $randomPage = rand(1, $maxPage);
 
@@ -46,43 +45,43 @@ function getRandomPokemonPack(int $count = 5): array
 }
 
 /**
- * Stampa i dettagli di una carta
+ * Prints the details of a card
  *
- * @param array $card Dati della carta
+ * @param array $card Card data
  */
 function printCardDetails(array $card): void
 {
     echo "<div class='card animated'>";
-    echo "<img src='". htmlspecialchars($card['images']['large'] ?? '') . "'>";
+    echo "<img src='" . htmlspecialchars($card['images']['large'] ?? '') . "'>";
     echo "</div>";
 }
 
-// Genera le carte se il pulsante è stato premuto
+// Generate cards if the button has been pressed
 $cards = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cards = getRandomPokemonPack();
 }
 ?>
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Pack Generator</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Schermata di caricamento */
+        /* Loading screen */
         .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%; /* Usa la larghezza della viewport */
-            height: 100%; /* Usa l'altezza della viewport */
-            background-color: #333844; /* Sfondo traslucido scuro */
+            width: 100%; /* Use the width of the viewport */
+            height: 100%; /* Use the height of the viewport */
+            background-color: #333844; /* Dark translucent background */
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999; /* Assicurati che sia sopra a tutto */
+            z-index: 9999; /* Ensure it is above everything else */
         }
 
         .loading-container {
@@ -91,11 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .loading-img {
-            width: 100px; /* Puoi scegliere la dimensione desiderata */
+            width: 100px; /* You can choose the desired size */
             margin-bottom: 20px;
         }
 
-        /* Animazione della Poké Ball */
+        /* Poké Ball animation */
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -105,25 +104,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-.loading-img {
-    animation: spin 2s linear infinite; /* Ruota la Poké Ball all'infinito */
-}
-
+        .loading-img {
+            animation: spin 2s linear infinite; /* Rotate the Poké Ball infinitely */
+        }
     </style>
 </head>
 <body>
-    <!-- Schermata di caricamento -->
+    <!-- Loading screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-container">
             <img src="res/loading.gif" alt="Loading..." class="loading-img">
-            <p>Caricando il Pacchetto Pokémon...</p>
+            <p>Loading Pokémon Pack...</p>
         </div>
     </div>
 
     <main id="app">
         <h1>Pokémon Pack Generator</h1>
         <form method="post">
-            <button type="submit">Genera un pacchetto casuale</button>
+            <button type="submit"> Generate a random pack</button>
         </form>
         <section class="cards">
             <?php if (!empty($cards)): ?>
@@ -135,12 +133,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <script>
-        // Gestire la schermata di caricamento
+        // Manage the loading screen
         window.addEventListener('load', function() {
-            // Nascondi la schermata di caricamento dopo 3 secondi
+            // Hide the loading screen after 3 seconds
             setTimeout(function() {
                 document.getElementById('loading-screen').style.display = 'none';
-            }, 800); // 3000 millisecondi = 3 secondi
+            }, 800); // 800 milliseconds
         });
     </script>
 </body>

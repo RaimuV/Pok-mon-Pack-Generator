@@ -1,9 +1,9 @@
 <?php
 /**
- * Esegue una richiesta all'API Pokémon TCG
+ * Executes a request to the Pokémon TCG API
  *
- * @param string $url URL dell'API da chiamare
- * @return array Risultato decodificato dalla risposta JSON
+ * @param string $url The API URL to call
+ * @return array The result decoded from the JSON response
  */
 function executeApiRequest(string $url): array
 {
@@ -15,7 +15,7 @@ function executeApiRequest(string $url): array
     $response = curl_exec($ch);
 
     if (curl_errno($ch)) {
-        echo "Errore nella richiesta: " . curl_error($ch);
+        echo "Request error: " . curl_error($ch);
         curl_close($ch);
         return [];
     }
@@ -25,15 +25,15 @@ function executeApiRequest(string $url): array
 }
 
 /**
- * Ottiene un pacchetto casuale di carte Pokémon
+ * Gets a random Pokémon pack
  *
- * @param int $count Numero di carte nel pacchetto
- * @return array Dati delle carte
+ * @param int $count The number of cards in the pack
+ * @return array The card data
  */
 function getRandomPokemonPack(int $count = 5): array
 {
-    // Calcola una pagina casuale (simulando casualità)
-    $totalCards = 12000; // Stima del numero totale di carte disponibili nell'API
+    // Calculate a random page (simulating randomness)
+    $totalCards = 12000; // Estimate of the total number of cards available in the API
     $maxPage = ceil($totalCards / $count);
     $randomPage = rand(1, $maxPage);
 
@@ -44,36 +44,36 @@ function getRandomPokemonPack(int $count = 5): array
 }
 
 /**
- * Stampa i dettagli di una carta
+ * Prints the details of a card
  *
- * @param array $card Dati della carta
+ * @param array $card The card data
  */
 function printCardDetails(array $card): void
 {
     echo "<div class='card animated'>";
-    echo "<img src='". htmlspecialchars($card['images']['large'] ?? '') . "'>";
+    echo "<img src='" . htmlspecialchars($card['images']['large'] ?? '') . "'>";
     echo "</div>";
 }
 
-// Genera le carte se il pulsante è stato premuto
+// Generate cards if the button was pressed
 $cards = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cards = getRandomPokemonPack();
 }
 ?>
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generatore di Pacchetti Pokémon</title>
+    <title>Pokémon Pack Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main id="app">
         <h1>Pokémon Pack Generator</h1>
         <form method="post">
-            <button type="submit">Genera un pacchetto casuale</button>
+            <button type="submit"> Generate a random pack</button>
         </form>
         <section class="cards">
             <?php if (!empty($cards)): ?>
