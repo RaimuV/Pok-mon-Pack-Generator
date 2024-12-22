@@ -113,10 +113,12 @@
 
 .card:after {
   opacity: 1;
+  /*
   background-image: url("https://assets.codepen.io/13471/sparkles.gif"), 
     url(https://assets.codepen.io/13471/holo.png), 
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
-  background-position: 50% 50%;
+  */
+    background-position: 50% 50%;
   background-size: 160%;
   background-blend-mode: overlay;
   z-index: 2;
@@ -175,9 +177,6 @@
     animation: holoSparkle 12s ease 0s 1;
   }
 }
-
-
-
 
 @keyframes holoSparkle {
   0%, 100% {
@@ -264,9 +263,6 @@
   );
 }
 
-
-
-
 .demo .card {
   background-image: var(--back);
   font-size: 2vh
@@ -310,11 +306,6 @@
   vertical-align: middle;
   font-size: 6vh;
 }
-
-
-
-
-
 
 html, body {
   height: 100%;
@@ -363,11 +354,6 @@ p {
   }
 }
 
-
-
-
-
-
 .cards .card {
   &:nth-child(2) {
     &, &:before, &:after {
@@ -385,7 +371,6 @@ p {
     }
   }
 }
-
 
 p {
   font-weight: 400;
@@ -409,8 +394,6 @@ p a {
 html,body,main {
   min-height: 100%;
 }
-
-
 
 @keyframes rubberBand {
   from {
